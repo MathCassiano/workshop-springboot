@@ -1,21 +1,25 @@
 package com.matheuscassiano.course.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "tb_user")
+@Table(name = "tb-user")
 public class User implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	// dizer que o id é minha chave primária
 	//como id é numério, ela vai ser autoincrementável no bd, entoa temos que dizer isso
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -23,6 +27,10 @@ public class User implements Serializable {
 	private String email;
 	private String phone;
 	private String password;
+	
+	//um para muitos
+	@OneToMany(mappedBy = "client")
+	private  List<Order> orders = new ArrayList<>();
 	
 	public User() {
 		
@@ -76,6 +84,11 @@ public class User implements Serializable {
 		this.phone = phone;
 	}
 	
+	public List<Order> getOrders() {
+		return orders;
+	}
+
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -93,6 +106,7 @@ public class User implements Serializable {
 		return Objects.equals(id, other.id);
 	}
 
+	
 	
 	
 
