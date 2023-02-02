@@ -3,6 +3,7 @@ package com.matheuscassiano.course.entities;
 import java.io.Serializable;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.matheuscassiano.course.entities.pk.OrderItemPK;
 
 import jakarta.persistence.EmbeddedId;
@@ -16,7 +17,8 @@ public class OrderItem implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	@EmbeddedId
-	private OrderItemPK id;
+	//quando criamos uma classe auxiliar que é um id composto, ela tem que ser instanciada
+	private OrderItemPK id = new OrderItemPK();
 	
 	private Integer quantity;
 	private Double price;
@@ -31,7 +33,7 @@ public class OrderItem implements Serializable{
 		this.quantity = quantity;
 		this.price = price;
 	}
-	
+	@JsonIgnore
 	public Order getOrder() {
 		return id.getOrder();
 	}
