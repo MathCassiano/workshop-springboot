@@ -3,6 +3,8 @@ package com.matheuscassiano.course.entities;
 import java.io.Serializable;
 import java.util.Objects;
 
+import org.hibernate.query.NativeQuery.ReturnableResultNode;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.matheuscassiano.course.entities.pk.OrderItemPK;
 
@@ -64,6 +66,12 @@ public class OrderItem implements Serializable{
 	}
 	public void setPrice(Double price) {
 		this.price = price;
+	}
+	
+	// subtotal de 1 order item
+	//para aparecer no json devo colocar o get
+	public Double getSubTotal() {
+		return price * quantity;
 	}
 	@Override
 	public int hashCode() {
