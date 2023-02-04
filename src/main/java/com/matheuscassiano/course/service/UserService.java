@@ -45,10 +45,14 @@ public class UserService {
 		}
 	}
 	public User update(Long id, User obj) {
+		try {
 		//prepara o objeto monitorado para mexer e depois efetuar uma operação com o bd
 		User entity = repository.getReferenceById(id);
 		updateData(entity, obj);
 		return repository.save(entity);
+		}catch(RuntimeException e) {
+			throw new ResourceNotFoundException(id);
+		}
 	}
 
 	private void updateData(User entity, User obj) {
