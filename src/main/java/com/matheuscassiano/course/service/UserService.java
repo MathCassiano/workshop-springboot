@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.matheuscassiano.course.entities.User;
 import com.matheuscassiano.course.repositories.UserRepository;
+import com.matheuscassiano.course.service.exceptions.ResourceNotFoundException;
 //registra a classe como componente, permitindo que o autowired o injete automaticamente
 //@Component
 @Service
@@ -24,7 +25,7 @@ public class UserService {
 	public User findById(Long Id) {
 		Optional<User> obj = repository.findById(Id);
 		//operação get do option retorna um objeto do tipo (nesse caso User) que estiver dentro do Optional.
-		return obj.get();
+		return obj.orElseThrow(() -> new ResourceNotFoundException(Id));
 	}
 	
 	public User insert(User obj) {
